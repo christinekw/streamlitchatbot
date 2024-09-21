@@ -39,9 +39,10 @@ if prompt := st.chat_input():
         del chain_of_emotion[0]
     
     response_input = '''玩家遇到的事件:{}
-                        玩家说的话:{}
                         聊天记录：{}
-                        你的情绪:{} '''
+                        玩家现在说的话:{}
+                        你的情绪:{} 
+                        请根据以上资料对玩家的话进行回应：'''
     agent_response = llm.llm_response.invoke(
             [llm.responsesystemprompt,('human',response_input.format(history.content,prompt,str(st.session_state.messages),agent_apresponse.content))]
         )
