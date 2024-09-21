@@ -1,16 +1,17 @@
 import os
 from AIchatbot.model import Model
 import streamlit as st
+from AIchatbot.firstmsg import first_meet, not_first_meet
 
 
 st.title("💬 Chatbot")
 
 chain_of_emotion = []
 chain_of_event = []
+#TODO: check if it is a new registered user
 
 if "messages" not in st.session_state:
-    st.session_state["messages"] = [{"role": "assistant", "content": "你好，我是啾啾。"}]
-
+    st.session_state["messages"] = [{"role": "assistant", "content": first_meet}]
 avatar = {"assistant":"image/bird/703792AF16B6EF4CAA8B303F81D7ED3A.png","user":"😳"}
 
 for msg in st.session_state.messages:
@@ -23,14 +24,14 @@ if prompt := st.chat_input():
     st.session_state.messages.append({"role": "user", "content": prompt})
     st.chat_message("user",avatar=avatar["user"]).write(prompt)
     chain_of_event.append(prompt)
-    history = llm.llm_summarize.invoke([('system','总结用户在提供的输入中遇到的事件，字数不超过200字。'),('human',str(chain_of_event))])
+    history = llm.llm_summarize.invoke([('system','总结玩家在提供的输入中遇到的事件，字数不超过200字。'),('human',str(chain_of_event))])
     if chain_of_emotion != []:
         agent_apresponse = llm.llm_appraisal.invoke(
             [llm.appraisalprompt.format(str(chain_of_emotion)),('human',"玩家的话："+prompt)]
         )
     else:
         agent_apresponse = llm.llm_appraisal.invoke(
-            [llm.appraisalprompt.format("这是一场新的对话。用户是你的新主人，你们第一次见面。"),('human',prompt)]
+            [llm.appraisalprompt.format("这是一场新的对话。玩家是你的新主人，你们第一次见面。"),('human',prompt)]
         )
     
     chain_of_emotion.append(agent_apresponse.content)
