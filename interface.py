@@ -31,7 +31,7 @@ if prompt := st.chat_input():
         )
     else:
         agent_apresponse = llm.llm_appraisal.invoke(
-            [llm.appraisalprompt.format("这是一场新的对话。玩家是你的新主人，你们第一次见面。"),('human',prompt)]
+            [llm.appraisalprompt.format("这是一场新的对话。玩家和你第一次见面。"),('human',prompt)]
         )
     
     chain_of_emotion.append(agent_apresponse.content)
