@@ -1,6 +1,6 @@
 from langchain_groq import ChatGroq
-import appraisalprompt
-import systemmsg
+import AIchatbot.appraisalprompt as appraisalprompt
+import AIchatbot.systemmsg as systemmsg
 from langchain_core.prompts import ChatPromptTemplate
 
 

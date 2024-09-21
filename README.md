@@ -12,3 +12,7 @@
 
 5. Use System Instruction + Message History + Appraisal History + User input to generate the response
 
+#   如何运行
+1.  下载所有图书馆 ： pip install -r requirements.txt
+2.  streamlit run interface.py
+3.  如果streamlit 显示module不存在，跑：pythonX.X -m streamlit run interface.py     X.X是你的python版本
