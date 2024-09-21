@@ -9,17 +9,19 @@ chain_of_emotion = []
 chain_of_event = []
 
 if "messages" not in st.session_state:
-    st.session_state["messages"] = [{"role": "assistant", "content": "你好，我是小鸟。"}]
+    st.session_state["messages"] = [{"role": "assistant", "content": "你好，我是啾啾。"}]
+
+avatar = {"assistant":"image/bird/703792AF16B6EF4CAA8B303F81D7ED3A.png","user":"😳"}
 
 for msg in st.session_state.messages:
-    st.chat_message(msg["role"]).write(msg["content"])
+    st.chat_message(msg["role"],avatar=avatar[msg["role"]]).write(msg["content"])
 
 if prompt := st.chat_input():
 
 
     llm = Model()
     st.session_state.messages.append({"role": "user", "content": prompt})
-    st.chat_message("user").write(prompt)
+    st.chat_message("user",avatar=avatar["user"]).write(prompt)
     chain_of_event.append(prompt)
     history = llm.llm_summarize.invoke([('system','总结用户在提供的输入中遇到的事件，字数不超过200字。'),('human',str(chain_of_event))])
     if chain_of_emotion != []:
@@ -43,4 +45,4 @@ if prompt := st.chat_input():
         )
     
     st.session_state.messages.append({"role": "assistant", "content":agent_response.content})
-    st.chat_message("assistant").write(agent_response.content)
+    st.chat_message("assistant",avatar=avatar["assistant"]).write(agent_response.content)
