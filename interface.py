@@ -40,9 +40,10 @@ if prompt := st.chat_input():
     
     response_input = '''玩家遇到的事件:{}
                         玩家说的话:{}
+                        聊天记录：{}
                         你的情绪:{} '''
     agent_response = llm.llm_response.invoke(
-            [llm.responsesystemprompt,('human',response_input.format(history.content,prompt,agent_apresponse.content))]
+            [llm.responsesystemprompt,('human',response_input.format(history.content,prompt,str(st.session_state.messages),agent_apresponse.content))]
         )
     
     st.session_state.messages.append({"role": "assistant", "content":agent_response.content})
